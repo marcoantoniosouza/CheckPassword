@@ -1,16 +1,21 @@
 import sys
 import getpass
+import argparse
+
 from http_request import pwned_api_pw
 from hash_password import hash_txt_pw
 
+parser = argparse.ArgumentParser(description='CheckPassword')
+parser.add_argument('--password', '-p', nargs='?')
+
 
 def main():
-	arg_count = len(sys.argv)
+	args = parser.parse_args()
 
-	if arg_count == 1:
+	if args.password == None:
 		arg_pw = getpass.getpass(prompt='Digite a senha: ')
 	else:
-		arg_pw = sys.argv[1]
+		arg_pw = args.password
 
 	hex = hash_txt_pw(arg_pw)
 	arr = pwned_api_pw(hex[:5])

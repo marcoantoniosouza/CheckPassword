@@ -17,6 +17,15 @@ parser = argparse.ArgumentParser(description='CheckPassword')
 parser.add_argument('--password', '-p', nargs='?', help=msg.get('help_password'))
 parser.add_argument('--encode', '-e', nargs='?', type=bool, default=False, choices=[True, False], help=msg.get('help_encode'))
 
+def print_color(text, color):
+	colors = {
+		'green': '\033[92m',
+		'red': '\033[91m'
+	}
+
+	end = '\033[0m'
+
+	print(colors.get(color) + text + end)
 
 def main():
 	args = parser.parse_args()
@@ -31,8 +40,8 @@ def main():
 
 	pw_count = arr.get(hex[5:])
 
-	if not pw_count: print(msg.get('output_not_found'))
-	else: print(msg.get('output_found') + ' ' + msg.get('output_count') + pw_count)
+	if not pw_count: print_color(msg.get('output_not_found'), 'green')
+	else: print_color(msg.get('output_found') + ' ' + msg.get('output_count') + pw_count, 'red')
 
 
 if __name__ == '__main__':
